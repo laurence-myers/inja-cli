@@ -1,0 +1,347 @@
+<html lang="en">
+<head>
+    <title>inja Syntax Cheat Sheet</title>
+    <style>
+        .code {
+            font-family: monospace;
+            white-space: pre;
+            background: #000;
+            color: #FFF;
+            padding: 1em;
+            text-align: start;
+            height: 100%;
+            /*margin: 0;*/
+        }
+
+        td {
+            height: 100%;
+        }
+
+        table {
+            border-spacing: 0.4em 2em;
+        }
+    </style>
+</head>
+<body>
+
+<table>
+    <thead>
+
+    <tr>
+        <th>Description</th>
+        <th>Template</th>
+        <th>Data</th>
+        <th>Output</th>
+    </tr>
+
+    </thead>
+
+    <tbody>
+
+    <tr>
+        <td>Variables</td>
+        <td>
+            <pre class="code">Hello {{ name }}!</pre>
+        </td>
+        <td>
+      <pre class="code">{
+  "name": "world"
+}</pre>
+        </td>
+        <td>
+            <pre class="code">Hello world!</pre>
+        </td>
+    </tr>
+
+    <tr>
+        <td>Variables - indexing in array</td>
+        <td>
+            <pre class="code">{{ guests.1 }}</pre>
+        </td>
+        <td>
+      <pre class="code">{
+  "guests": [
+    "Jeff",
+    "Tom",
+    "Patrick"
+  ]
+}</pre>
+        </td>
+        <td>
+            <pre class="code">Tom</pre>
+        </td>
+    </tr>
+
+    <tr>
+        <td>Variables - objects</td>
+        <td>
+            <pre class="code">{{ time.start }} to {{ time.end + 1 }}pm</pre>
+        </td>
+        <td>
+      <pre class="code">{
+  "time": {
+    "start": 16,
+    "end": 22
+  }
+}</pre>
+        </td>
+        <td>
+            <pre class="code">16 to 23pm</pre>
+        </td>
+    </tr>
+
+    <tr>
+        <td>Statements</td>
+        <td>
+      <pre class="code">Foo {% ... %} bar
+## ...</pre>
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+    </tr>
+
+    <tr>
+        <td>Statements - loops</td>
+        <td>
+      <pre class="code">(Guest List:
+## for guest in guests
+    {{ loop.index1 }}: {{ guest }}
+## endfor )</pre>
+        </td>
+        <td>
+      <pre class="code">{
+  "guests": [
+    "Jeff",
+    "Tom",
+    "Patrick"
+  ]
+}</pre>
+        </td>
+        <td>
+      <pre class="code">Guest List:
+    1: Jeff
+    2: Tom
+    3: Patrick</pre>
+        </td>
+    </tr>
+
+    <tr>
+        <td>Statements - conditions</td>
+        <td>
+      <pre class="code">{% if time.hour >= 20 %}Serve{% else if time.hour >= 18 %}Make{% endif %} dinner.
+{% if neighbour in guests %}Turn up the music!{% endif %}
+{% if guest_count < (3+2) and all_tired %}Sleepy...{% else %}Keep going...{% endif %}
+{% if not guest_count %}The End{% endif %}</pre>
+        </td>
+        <td><pre class="code">{
+  "guests": [
+    "Jeff",
+    "Tom",
+    "Patrick"
+  ],
+  "neighbour": "Patrick",
+  "time": {
+    "start": 16,
+    "end": 22
+  }
+}</pre>
+        </td>
+        <td>
+      <pre class="code">Serve dinner.
+Turn up the music!
+Sleepy...
+The End</pre>
+        </td>
+    </tr>
+
+    <tr>
+        <td>Statements - Includes (from environment/memory)</td>
+        <td>
+            <pre class="code">Content: {% include "content" %}</pre>
+        </td>
+        <td><pre class="code">{
+  "neighbour": "Peter"
+}</pre>
+        </td>
+        <td>
+            <pre class="code">Content: Hello Peter!</pre>
+        </td>
+    </tr>
+
+    <tr>
+        <td>Statements - Includes (from file)</td>
+        <td>
+            <pre class="code">Content: {% include "content.txt" %}</pre>
+        </td>
+        <td><pre class="code">{
+  "neighbour": "Peter"
+}</pre>
+        </td>
+        <td>
+            <pre class="code">Content: Hello Peter!</pre>
+        </td>
+    </tr>
+
+    <tr>
+        <td>Statements - Assignments</td>
+        <td>
+          <pre class="code">{% set new_hour=23 %}{{ new_hour }}pm
+{% set time.start=18 %}{{ time.start }}pm</pre>
+        </td>
+        <td><pre class="code">{
+  "time": {
+    "start": 16
+  },
+}</pre>
+        </td>
+        <td>
+        </td>
+    </tr>
+
+    <tr>
+        <td>Template Inheritance - Parent</td>
+        <td>
+            <pre class="code">{% block title %}Parent{% endblock %}</pre>
+        </td>
+        <td></td>
+        <td></td>
+    </tr>
+
+    <tr>
+        <td>Template Inheritance - Child</td>
+        <td>
+            <pre class="code">{% extends "base.txt" %}
+{% block title %}Child{% endblock %}</pre>
+        </td>
+        <td></td>
+        <td></td>
+    </tr>
+
+    <tr>
+        <td>Whitespace Control</td>
+        <td>
+            <pre class="code">Hello       {{- name -}}     !
+{% if neighbour in guests -%}   I was there{% endif -%}   !</pre>
+        </td>
+        <td><pre class="code">{
+  "guests": [
+    "Jeff",
+    "Tom",
+    "Patrick"
+  ],
+  "name": "Inja",
+  "neighbour": "Patrick"
+}</pre></td>
+        <td><pre class="code">Hello Inja!
+I was there!</pre></td>
+    </tr>
+
+    <tr>
+        <td>Comments</td>
+        <td>
+            <pre class="code">Hello{# Todo #}!</pre>
+        </td>
+        <td></td>
+        <td><pre class="code">Hello!</pre></td>
+    </tr>
+
+    </tbody>
+</table>
+
+<h2>Functions</h2>
+<ul>
+    <li>
+        <pre>upper(string)</pre>
+    </li>
+    <li>
+        <pre>lower(string)</pre>
+    </li>
+    <li>
+        <pre>range(int)</pre>
+    </li>
+    <li>
+        <pre>length(list)</pre>
+    </li>
+    <li>
+        <pre>first(list)</pre>
+    </li>
+    <li>
+        <pre>last(list)</pre>
+    </li>
+    <li>
+        <pre>sort(list)</pre>
+    </li>
+    <li>
+        <pre>join(list)</pre>
+    </li>
+    <li>
+        <pre>round(float, int)</pre>
+    </li>
+    <li>
+        <pre>odd(int)</pre>
+    </li>
+    <li>
+        <pre>even(int)</pre>
+    </li>
+    <li>
+        <pre>divisibleBy(int, int)</pre>
+    </li>
+    <li>
+        <pre>max(list)</pre>
+    </li>
+    <li>
+        <pre>min(list)</pre>
+    </li>
+    <li>
+        <pre>int(string)</pre>
+    </li>
+    <li>
+        <pre>float(string)</pre>
+    </li>
+    <li>
+        <pre>default(any, any)</pre>
+    </li>
+    <li>
+        <pre>at(object, string)</pre>
+    </li>
+    <li>
+        <pre>exists(string)</pre>
+    </li>
+    <li>
+        <pre>exists(object, string)</pre>
+    </li>
+    <li>
+        <pre>isArray(any)</pre>
+    </li>
+    <li>
+        <pre>isBoolean(any)</pre>
+    </li>
+    <li>
+        <pre>isFloat(any)</pre>
+    </li>
+    <li>
+        <pre>isInteger(any)</pre>
+    </li>
+    <li>
+        <pre>isNumber(any)</pre>
+    </li>
+    <li>
+        <pre>isObject(any)</pre>
+    </li>
+    <li>
+        <pre>isString(any)</pre>
+    </li>
+    <li>
+        <pre>super()</pre>
+        (in an inherited block)
+    </li>
+    <li>
+      <pre>super(2)</pre>
+      (in a nested inherited block)
+    </li>
+</ul>
+
+</body>
+</html>
