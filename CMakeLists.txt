@@ -55,6 +55,18 @@ CPMAddPackage(
 
 CPMAddPackage("gh:pantor/inja@3.3.0")
 
+CPMAddPackage(
+    NAME tclap
+    VERSION 1.4.0-rc1
+    URL "https://ixpeering.dl.sourceforge.net/project/tclap/tclap-1.4.0-rc1.tar.bz2"
+)
+if(tclap_ADDED)
+    add_library(tclap INTERFACE IMPORTED)
+    target_include_directories(
+        tclap SYSTEM INTERFACE ${tclap_SOURCE_DIR}/include
+    )
+endif()
+
 ##############
 # App settings
 
@@ -66,7 +78,7 @@ set_target_properties(inja_cli PROPERTIES OUTPUT_NAME "inja")
 ###################
 # Link dependencies
 
-target_link_libraries(inja_cli nowide inja)
+target_link_libraries(inja_cli nowide inja tclap)
 
 ################
 # Package as zip
