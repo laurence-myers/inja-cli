@@ -21,6 +21,11 @@ if (WIN32)
     set(EXECUTABLE_OUTPUT_PATH "${CMAKE_BINARY_DIR}")
 endif ()
 
+# Statically link the Windows runtime dependencies
+if (MSVC)
+    set(CMAKE_MSVC_RUNTIME_LIBRARY  "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+endif ()
+
 ###################
 # Install CPM.cmake
 
