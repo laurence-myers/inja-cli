@@ -7,6 +7,7 @@ project(inja_cli
     )
 
 set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_POLICY_DEFAULT_CMP0135 NEW) # Avoid a CMake warning
 
 ################
 # Platform config
