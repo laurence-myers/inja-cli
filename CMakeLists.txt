@@ -67,9 +67,9 @@ CPMAddPackage(
     URL "https://ixpeering.dl.sourceforge.net/project/tclap/tclap-1.4.0-rc1.tar.bz2"
 )
 if(tclap_ADDED)
-    add_library(tclap INTERFACE IMPORTED)
+    add_library(tclap INTERFACE EXCLUDE_FROM_ALL)
     target_include_directories(
-        tclap SYSTEM INTERFACE ${tclap_SOURCE_DIR}/include
+        tclap INTERFACE ${tclap_SOURCE_DIR}/include
     )
 endif()
 
