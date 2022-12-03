@@ -97,6 +97,8 @@ install(
     ${CPACK_RESOURCE_FILE_README}
     DESTINATION
     .
+    COMPONENT
+    inja_cli
 )
 
 include(CPackComponent)
@@ -120,5 +122,7 @@ set(CPACK_BINARY_NSIS "OFF")
 set(CPACK_BINARY_ZIP "ON")
 set(CPACK_PACKAGE_NAME "inja_cli")
 set(CPACK_PACKAGE_VENDOR "Laurence Dougal Myers")
+
+set(CPACK_INSTALL_CMAKE_PROJECTS "${CMAKE_BINARY_DIR};inja_cli;inja_cli;/")
 
 include(CPack)
