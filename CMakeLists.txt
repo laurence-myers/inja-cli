@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.22)
+cmake_minimum_required(VERSION 3.24.2)
 project(inja_cli
     VERSION 0.0.0
     DESCRIPTION "Inja CLI"
