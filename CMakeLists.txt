@@ -84,7 +84,7 @@ set_target_properties(inja_cli PROPERTIES OUTPUT_NAME "inja")
 ###################
 # Link dependencies
 
-target_link_libraries(inja_cli nowide inja tclap)
+target_link_libraries(inja_cli PRIVATE nowide inja tclap)
 
 ################
 # Package as zip
